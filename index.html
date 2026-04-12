@@ -1,35 +1,196 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      h1 {
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Personalized Addiction breaker plan</h1>
-    <div class="main">
-      <div class="addiction-list">
-        <h2>Choose which you have :</h2>
-        <button class="addiction">Scrolling Reels</button>
-        <button class="addiction">Movies or web series</button>
-        <button class="addiction">Overthinking</button>
-        <button class="addiction">Knowledge</button>
-        <button class="addiction">Validation</button>
-        <button class="addiction">Playing video games</button>
-        <button class="addiction">Drinking Alcohol</button>
-        <button class="addiction">Smoking</button>
-      </div>
-      <div class="slot">
-        <h2>Select when it occurs :</h2>
-        <button>When triggered by trauma</button>
-        <button>It's my habit</button>
-        <button>Just want escape from present</button>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Addiction Breaker</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #1e293b;
+      color: white;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #38bdf8;
+    }
+
+    .selected {
+      background: #22c55e !important;
+    }
+
+    #generateBtn {
+      margin-top: 20px;
+      background: #f97316;
+      font-size: 16px;
+    }
+
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #1e293b;
+      border-radius: 10px;
+      display: none;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>💡 Personalized Addiction Breaker Plan</h1>
+
+  <div class="container">
+
+    <!-- Addiction Selection -->
+    <div class="section">
+      <h2>Choose your addiction:</h2>
+      <button class="addiction">Scrolling Reels</button>
+      <button class="addiction">Movies / Web Series</button>
+      <button class="addiction">Overthinking</button>
+      <button class="addiction">Validation</button>
+      <button class="addiction">Video Games</button>
+      <button class="addiction">Alcohol</button>
+      <button class="addiction">Smoking</button>
     </div>
-  </body>
+
+    <!-- Trigger Selection -->
+    <div class="section">
+      <h2>When does it occur?</h2>
+      <button class="trigger">Triggered by stress</button>
+      <button class="trigger">It's a habit</button>
+      <button class="trigger">Escaping reality</button>
+    </div>
+
+    <button id="generateBtn">Generate Plan</button>
+
+    <!-- Result -->
+    <div id="result"></div>
+
+  </div>
+
+  <script>
+    let selectedAddiction = "";
+    let selectedTrigger = "";
+
+    const addictions = document.querySelectorAll(".addiction");
+    const triggers = document.querySelectorAll(".trigger");
+    const resultDiv = document.getElementById("result");
+
+    // Select addiction
+    addictions.forEach(btn => {
+      btn.addEventListener("click", () => {
+        addictions.forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedAddiction = btn.innerText;
+      });
+    });
+
+    // Select trigger
+    triggers.forEach(btn => {
+      btn.addEventListener("click", () => {
+        triggers.forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedTrigger = btn.innerText;
+      });
+    });
+
+    // Generate Plan
+    document.getElementById("generateBtn").addEventListener("click", () => {
+
+      if (!selectedAddiction || !selectedTrigger) {
+        alert("Please select both addiction and trigger!");
+        return;
+      }
+
+      let plan = "";
+
+      // Logic
+      if (selectedAddiction === "Scrolling Reels") {
+        plan = `
+        🔴 Problem: Dopamine overload from short content  
+        ✅ Plan:
+        - Delete or limit app usage (use timer)
+        - Replace with 10-min learning videos
+        - Keep phone away during work
+        `;
+      }
+
+      else if (selectedAddiction === "Overthinking") {
+        plan = `
+        🔴 Problem: Mind stuck in loops  
+        ✅ Plan:
+        - Write thoughts in a notebook
+        - Do physical activity (pushups/walk)
+        - Practice 5-min breathing
+        `;
+      }
+
+      else if (selectedAddiction === "Video Games") {
+        plan = `
+        🔴 Problem: Escaping reality through games  
+        ✅ Plan:
+        - Fix gaming time (max 1 hr)
+        - Replace with skill-building activity
+        - Track daily time spent
+        `;
+      }
+
+      else {
+        plan = `
+        🔴 Problem: ${selectedAddiction}  
+        ✅ Plan:
+        - Identify trigger
+        - Replace habit with productive action
+        - Track daily progress
+        `;
+      }
+
+      // Trigger-based addition
+      if (selectedTrigger === "Triggered by stress") {
+        plan += `<br><br>🧠 Extra:
+        - Learn stress management
+        - Try meditation or journaling`;
+      }
+
+      if (selectedTrigger === "Escaping reality") {
+        plan += `<br><br>🧠 Extra:
+        - Set small life goals
+        - Work on purpose-driven tasks`;
+      }
+
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `<h3>Your Plan:</h3>${plan}`;
+    });
+  </script>
+
+</body>
 </html>
